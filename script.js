@@ -59,7 +59,8 @@ function abrirInvitacion() {
 /** Confeti dorado hecho solo con JS + CSS */
 function lanzarConfeti(cantidad) {
   if (reducirMovimiento) return;
-  const colores = ["#c9a659", "#a9873f", "#1c3b2a", "#2c5540"];
+
+  const colores = ["#8B0000", "#C99700", "#FFD966", "#FF6B6B"];
 
   for (let i = 0; i < cantidad; i++) {
     const p = document.createElement("i");
