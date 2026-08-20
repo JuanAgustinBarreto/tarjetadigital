@@ -10,15 +10,15 @@
 const CONFIG = {
   nombre: "Juanico",
   // Fecha del evento en formato ISO (usada por el contador)
-  fechaEventoISO: "2026-12-18T00:00:00",
-  fechaEventoTexto: "18 de diciembre de 2026",
-  hora: "[HORARIO]",
-  lugar: "[LUGAR]",
-  direccion: "[DIRECCIÓN]",
-  telefono: "549XXXXXXXXXX", // formato internacional sin '+' ni espacios
+  fechaEventoISO: "2026-12-19T00:00:00",
+  fechaEventoTexto: "19 de diciembre de 2026",
+  hora: "21:30",
+  lugar: "Salón La Familia",
+  direccion: "Feliciano 443",
+  telefono: "5493435451818", // formato internacional sin '+' ni espacios
   alias: "los80dejuanico",
   fechaLimiteConfirmacion: "1 de diciembre de 2026",
-  mensajeWhatsapp: "Hola! 🎉 Quiero confirmar mi presencia en los 80 años de Juanico, el 18 de diciembre. ¡Nos vemos! ❤️"
+  mensajeWhatsapp: "Hola! 🎉 Quiero confirmar mi presencia en los 80 años de Juanico, el 19 de diciembre. ¡Nos vemos! ❤️"
 };
 
 /* ----------------------------------------------------------
