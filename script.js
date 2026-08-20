@@ -1,230 +1,114 @@
-/* ============================================================
-   JUANICO · 80 AÑOS — SCRIPT
-   ============================================================ */
-
-/* ----------------------------------------------------------
-   CONFIG
-   Editá únicamente estos valores. Todo el sitio los usa
-   desde acá — no hace falta tocar el HTML ni el CSS.
----------------------------------------------------------- */
+/* =======================================================
+   1) CONFIGURACIÓN — EDITÁ SOLO ESTO
+   La foto va en:  img/abuelo.jpg
+   ======================================================= */
 const CONFIG = {
   nombre: "Juanico",
-  // Fecha del evento en formato ISO (usada por el contador)
-  fechaEventoISO: "2026-12-19T00:00:00",
-  fechaEventoTexto: "19 de diciembre de 2026",
-  hora: "21:30",
+  fecha: "19 de diciembre",
+  hora: "21:00 hs",
   lugar: "Salón La Familia",
-  direccion: "Feliciano 443",
-  telefono: "5493435451818", // formato internacional sin '+' ni espacios
-  alias: "los80dejuanico",
-  fechaLimiteConfirmacion: "1 de diciembre de 2026",
-  mensajeWhatsapp: "Hola! 🎉 Quiero confirmar mi presencia en los 80 años de Juanico, el 19 de diciembre. ¡Nos vemos! ❤️"
+  direccion: "Feliciano 448",
+  telefono: "5493435451818", // sin +, sin espacios
+  valor: "$40.000",
 };
 
-/* ----------------------------------------------------------
-   DOM
----------------------------------------------------------- */
-const dom = {
-  pantalla1: document.getElementById("pantalla-1"),
-  pantalla2: document.getElementById("pantalla-2"),
-  btnAbrir: document.getElementById("btnAbrir"),
+// Fecha y hora del evento para el contador (año, mes-1, día, hora, minuto)
+const FECHA_EVENTO = new Date(2026, 11, 19, 21, 0, 0);
 
-  fechaEvento: document.getElementById("fechaEvento"),
-  valorHora: document.getElementById("valorHora"),
-  valorLugar: document.getElementById("valorLugar"),
-  valorDireccion: document.getElementById("valorDireccion"),
-  fechaLimite: document.getElementById("fechaLimite"),
-  valorAlias: document.getElementById("valorAlias"),
+/* =======================================================
+   2) ELEMENTOS DEL DOM
+   ======================================================= */
+const $ = (id) => document.getElementById(id);
 
-  contador: document.getElementById("contador"),
-  numDias: document.getElementById("numDias"),
-  numHoras: document.getElementById("numHoras"),
-  numMinutos: document.getElementById("numMinutos"),
-  numSegundos: document.getElementById("numSegundos"),
-  mensajeHoy: document.getElementById("mensajeHoy"),
+const pantalla = $("bienvenida");
+const invitacion = $("invitacion");
+const btnAbrir = $("btn-abrir");
+const btnConfirmar = $("btn-confirmar");
+const cuenta = $("cuenta");
+const cuentaFinal = $("cuenta-final");
 
-  btnWhatsapp: document.getElementById("btnWhatsapp"),
-  btnCopiar: document.getElementById("btnCopiar"),
-  confirmacionCopia: document.getElementById("confirmacionCopia"),
+const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  fadeUps: document.querySelectorAll(".fade-up")
-};
+/* =======================================================
+   3) FUNCIONES
+   ======================================================= */
 
-const prefiereMenosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-/* ----------------------------------------------------------
-   INICIALIZACIÓN DE DATOS (desde CONFIG hacia el DOM)
----------------------------------------------------------- */
-function pintarConfiguracion() {
-  dom.fechaEvento.textContent = CONFIG.fechaEventoTexto;
-  dom.valorHora.textContent = CONFIG.hora;
-  dom.valorLugar.textContent = CONFIG.lugar;
-  dom.valorDireccion.textContent = CONFIG.direccion;
-  dom.fechaLimite.textContent = CONFIG.fechaLimiteConfirmacion;
-  dom.valorAlias.textContent = CONFIG.alias;
+/** Vuelca los datos de CONFIG en la tarjeta */
+function cargarDatos() {
+  $("nombre").textContent = CONFIG.nombre;
+  $("fecha").textContent = CONFIG.fecha.toUpperCase();
+  $("hora").textContent = CONFIG.hora;
+  $("lugar").textContent = CONFIG.lugar;
+  $("direccion").textContent = CONFIG.direccion;
+  $("valor").textContent = CONFIG.valor;
 }
 
-/* ----------------------------------------------------------
-   ALTURA REAL DEL VIEWPORT (evita saltos por la barra de
-   direcciones en navegadores móviles)
----------------------------------------------------------- */
-function fijarAlturaViewport() {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-}
-
-/* ----------------------------------------------------------
-   NAVEGACIÓN · transición entre pantallas
----------------------------------------------------------- */
+/** Transición de la pantalla de bienvenida a la invitación */
 function abrirInvitacion() {
-  dom.btnAbrir.disabled = true;
-  dom.btnAbrir.classList.add("sello--activado");
-
-  const duracionSello = prefiereMenosMovimiento ? 0 : 620;
+  pantalla.classList.add("saliendo");
+  invitacion.classList.remove("oculto");
+  invitacion.setAttribute("aria-hidden", "false");
 
   window.setTimeout(() => {
-    dom.pantalla1.classList.add("portada--oculta");
-    dom.pantalla1.setAttribute("aria-hidden", "true");
-
-    dom.pantalla2.setAttribute("aria-hidden", "false");
-    dom.pantalla2.classList.add("invitacion--visible");
-
-    // Foco accesible: mover el foco al contenido nuevo
-    dom.pantalla2.setAttribute("tabindex", "-1");
-    dom.pantalla2.focus({ preventScroll: true });
-
-    window.scrollTo({ top: 0, behavior: prefiereMenosMovimiento ? "auto" : "smooth" });
-
-    activarScrollReveal();
-  }, duracionSello);
+    pantalla.classList.add("oculto");
+    invitacion.scrollIntoView({ behavior: reducirMovimiento ? "auto" : "smooth", block: "start" });
+    lanzarConfeti(50);
+  }, reducirMovimiento ? 0 : 700);
 }
 
-/* ----------------------------------------------------------
-   ANIMACIONES · aparición progresiva al hacer scroll
----------------------------------------------------------- */
-function activarScrollReveal() {
-  if (!("IntersectionObserver" in window) || prefiereMenosMovimiento) {
-    dom.fadeUps.forEach((el) => el.classList.add("en-vista"));
-    return;
+/** Confeti dorado hecho solo con JS + CSS */
+function lanzarConfeti(cantidad) {
+  if (reducirMovimiento) return;
+  const colores = ["#c9a659", "#a9873f", "#1c3b2a", "#2c5540"];
+
+  for (let i = 0; i < cantidad; i++) {
+    const p = document.createElement("i");
+    p.className = "confeti";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.background = colores[Math.floor(Math.random() * colores.length)];
+    p.style.animationDuration = 2.6 + Math.random() * 2.4 + "s";
+    p.style.animationDelay = Math.random() * 0.8 + "s";
+    p.style.opacity = String(0.6 + Math.random() * 0.4);
+    document.body.appendChild(p);
+    p.addEventListener("animationend", () => p.remove());
   }
-
-  const observador = new IntersectionObserver(
-    (entradas) => {
-      entradas.forEach((entrada) => {
-        if (entrada.isIntersecting) {
-          entrada.target.classList.add("en-vista");
-          observador.unobserve(entrada.target);
-        }
-      });
-    },
-    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-  );
-
-  dom.fadeUps.forEach((el) => observador.observe(el));
 }
 
-/* ----------------------------------------------------------
-   CONTADOR REGRESIVO
----------------------------------------------------------- */
-let idIntervaloContador = null;
+/** Arma el link de WhatsApp y lo abre */
+function confirmarAsistencia() {
+  const mensaje =
+    "Hola! 🎉 Confirmo mi asistencia al cumpleaños de los 80 de " +
+    CONFIG.nombre +
+    " el " + CONFIG.fecha + ". ¡Nos vemos! ❤️";
 
-function actualizarContador() {
-  const ahora = new Date().getTime();
-  const objetivo = new Date(CONFIG.fechaEventoISO).getTime();
-  const diferencia = objetivo - ahora;
-
-  if (diferencia <= 0) {
-    if (idIntervaloContador) window.clearInterval(idIntervaloContador);
-    dom.contador.hidden = true;
-    dom.mensajeHoy.hidden = false;
-    return;
-  }
-
-  const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-  const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-  const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
-
-  dom.numDias.textContent = String(dias).padStart(2, "0");
-  dom.numHoras.textContent = String(horas).padStart(2, "0");
-  dom.numMinutos.textContent = String(minutos).padStart(2, "0");
-  dom.numSegundos.textContent = String(segundos).padStart(2, "0");
-}
-
-function iniciarContador() {
-  actualizarContador();
-  idIntervaloContador = window.setInterval(actualizarContador, 1000);
-}
-
-/* ----------------------------------------------------------
-   WHATSAPP
----------------------------------------------------------- */
-function abrirWhatsapp() {
-  const mensaje = encodeURIComponent(CONFIG.mensajeWhatsapp);
-  const url = `https://wa.me/${CONFIG.telefono}?text=${mensaje}`;
+  const url = "https://wa.me/" + CONFIG.telefono + "?text=" + encodeURIComponent(mensaje);
   window.open(url, "_blank", "noopener");
 }
 
-/* ----------------------------------------------------------
-   COPIAR ALIAS
----------------------------------------------------------- */
-let idTimeoutCopia = null;
+/** Contador regresivo */
+function actualizarContador() {
+  const restante = FECHA_EVENTO.getTime() - Date.now();
 
-async function copiarAlias() {
-  try {
-    await navigator.clipboard.writeText(CONFIG.alias);
-    mostrarConfirmacionCopia();
-  } catch (error) {
-    // Alternativa para navegadores sin soporte de clipboard API
-    copiarAliasAlternativo();
+  if (restante <= 0) {
+    cuenta.classList.add("oculto");
+    cuentaFinal.classList.remove("oculto");
+    window.clearInterval(intervalo);
+    return;
   }
+
+  const seg = Math.floor(restante / 1000);
+  $("c-dias").textContent = Math.floor(seg / 86400);
+  $("c-horas").textContent = Math.floor((seg % 86400) / 3600);
+  $("c-min").textContent = Math.floor((seg % 3600) / 60);
+  $("c-seg").textContent = seg % 60;
 }
 
-function copiarAliasAlternativo() {
-  const areaTemporal = document.createElement("textarea");
-  areaTemporal.value = CONFIG.alias;
-  areaTemporal.setAttribute("readonly", "");
-  areaTemporal.style.position = "absolute";
-  areaTemporal.style.left = "-9999px";
-  document.body.appendChild(areaTemporal);
-  areaTemporal.select();
-  try {
-    document.execCommand("copy");
-    mostrarConfirmacionCopia();
-  } catch (error) {
-    console.error("No se pudo copiar el alias:", error);
-  }
-  document.body.removeChild(areaTemporal);
-}
+/* =======================================================
+   4) EVENTOS E INICIO
+   ======================================================= */
+btnAbrir.addEventListener("click", abrirInvitacion);
+btnConfirmar.addEventListener("click", confirmarAsistencia);
 
-function mostrarConfirmacionCopia() {
-  dom.confirmacionCopia.classList.add("visible");
-  if (idTimeoutCopia) window.clearTimeout(idTimeoutCopia);
-  idTimeoutCopia = window.setTimeout(() => {
-    dom.confirmacionCopia.classList.remove("visible");
-  }, 2600);
-}
-
-/* ----------------------------------------------------------
-   EVENTOS
----------------------------------------------------------- */
-function registrarEventos() {
-  dom.btnAbrir.addEventListener("click", abrirInvitacion);
-  dom.btnWhatsapp.addEventListener("click", abrirWhatsapp);
-  dom.btnCopiar.addEventListener("click", copiarAlias);
-
-  window.addEventListener("resize", fijarAlturaViewport);
-  window.addEventListener("orientationchange", fijarAlturaViewport);
-}
-
-/* ----------------------------------------------------------
-   INICIO
----------------------------------------------------------- */
-function iniciar() {
-  fijarAlturaViewport();
-  pintarConfiguracion();
-  iniciarContador();
-  registrarEventos();
-}
-
-document.addEventListener("DOMContentLoaded", iniciar);
+cargarDatos();
+actualizarContador();
+const intervalo = window.setInterval(actualizarContador, 1000);
