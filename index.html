@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
 <section id="pantalla-1" class="pantalla-portada">
 
   <div class="portada-media">
-    <img src="juanico.jpg" alt="Juanico sonriendo en una plaza, un mediodía soleado" class="portada-foto" id="fotoPortada">
+    <img src="img/juanico.jpg" alt="Juanico sonriendo en una plaza, un mediodía soleado" class="portada-foto" id="fotoPortada">
     <div class="portada-degradado"></div>
     <div class="polvo-dorado" aria-hidden="true"></div>
   </div>
@@ -29,7 +29,7 @@
   <div class="portada-contenido">
     <p class="portada-eyebrow reveal" style="--d:0">Hay historias que merecen ser celebradas</p>
 
-    <h1 class="portada-nombre reveal" style="--d:1"></h1>
+    <h1 class="portada-nombre reveal" style="--d:1">Juanico</h1>
 
     <div class="portada-edad reveal" style="--d:2">
       <span class="linea-dorada" aria-hidden="true"></span>
@@ -38,7 +38,7 @@
       <span class="linea-dorada" aria-hidden="true"></span>
     </div>
 
-    <p class="portada-fecha reveal" style="--d:3">19 de diciembre · 2026</p>
+    <p class="portada-fecha reveal" style="--d:3">18 de diciembre · 2026</p>
 
     <button type="button" id="btnAbrir" class="boton-sello reveal" style="--d:4" aria-label="Abrir la invitación">
       <span class="sello-anillo" aria-hidden="true"></span>
@@ -63,10 +63,10 @@
 
     <header class="tarjeta-encabezado fade-up">
       <p class="eyebrow">Celebramos</p>
-      <p class="subtitulo">los 80 años de JUANICO</p>
-      <h2 class="tarjeta-nombre"></h2>
+      <p class="subtitulo">los 80 años de</p>
+      <h2 class="tarjeta-nombre">Juanico</h2>
       <div class="ornamento" aria-hidden="true"><span></span><i></i><span></span></div>
-      <p class="tarjeta-fecha" id="fechaEvento">19 de diciembre de 2026</p>
+      <p class="tarjeta-fecha" id="fechaEvento">18 de diciembre de 2026</p>
     </header>
 
     <div class="detalles fade-up">
@@ -74,21 +74,21 @@
         <svg class="detalle-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
         <div>
           <span class="detalle-label">Hora</span>
-          <span class="detalle-valor" id="valorHora">21:00</span>
+          <span class="detalle-valor" id="valorHora">[HORARIO]</span>
         </div>
       </div>
       <div class="detalle">
         <svg class="detalle-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5C5 5.4 8.1 2.5 12 2.5S19 5.4 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
         <div>
           <span class="detalle-label">Lugar</span>
-          <span class="detalle-valor" id="valorLugar">Salón La Familia</span>
+          <span class="detalle-valor" id="valorLugar">[LUGAR]</span>
         </div>
       </div>
       <div class="detalle">
         <svg class="detalle-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8.5Z"/></svg>
         <div>
           <span class="detalle-label">Dirección</span>
-          <span class="detalle-valor" id="valorDireccion">Feliciano 443</span>
+          <span class="detalle-valor" id="valorDireccion">[DIRECCIÓN]</span>
         </div>
       </div>
     </div>
@@ -116,10 +116,7 @@
       </div>
     </div>
     <p class="contador-mensaje" id="mensajeHoy" hidden>¡Hoy es el gran día! 🎉</p>
-     <div class="valor">
-          <small>VALOR DE LA TARJETA</small>
-          <b id="valor">$40.000</b>
-        </div>
+
     <!-- RSVP -->
     <div class="rsvp fade-up">
       <p class="rsvp-titulo">Confirmá tu presencia</p>
@@ -134,8 +131,8 @@
 
     <!-- Regalo -->
     <div class="regalo fade-up">
-      <p class="regalo-titulo">Si ya confirmaste tu presencia, puedes pagar la tarjeta a este alias</p>
-      <p class="regalo-texto">Tu presencia es el mejor regalo, pero si querés hacerle un presente, podés utilizar este alias también.</p>
+      <p class="regalo-titulo">Si querés hacerle un regalo</p>
+      <p class="regalo-texto">Tu presencia es el mejor regalo, pero si querés hacerle un presente, podés utilizar este alias.</p>
       <div class="regalo-alias">
         <span class="regalo-alias-label">Alias</span>
         <span class="regalo-alias-valor" id="valorAlias">los80dejuanico</span>
@@ -146,13 +143,13 @@
 
     <footer class="tarjeta-pie fade-up">
       <span class="pie-linea" aria-hidden="true"></span>
-      <span>Te espero para celebrar juntos</span>
+      <span>Con cariño, para Juanico</span>
       <span class="pie-linea" aria-hidden="true"></span>
     </footer>
 
   </div>
 </section>
 
-<script src="script.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
