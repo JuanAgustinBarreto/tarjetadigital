@@ -283,7 +283,17 @@ h1, h2, h3, p { margin: 0; }
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100);
   width: 100%;
-  background: var(--crema-2);
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(198,161,91,0.08), transparent 60%),
+    var(--negro);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 56px 18px calc(72px + env(safe-area-inset-bottom));
+  opacity: 0;
+  transform: translateY(24px) scale(0.99);
+  transition: opacity var(--transicion-suave), transform var(--transicion-suave);
+}
 
 .pantalla-invitacion.invitacion--visible {
   opacity: 1;
@@ -639,3 +649,7 @@ h1, h2, h3, p { margin: 0; }
   .portada-foto { transform: none; }
   .reveal, .fade-up { opacity: 1; transform: none; }
 }
+
+
+
+me aparece un coso negro grandisimo en la pantalla de invitacion, necesito sacarlo
